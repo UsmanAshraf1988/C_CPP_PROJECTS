@@ -1,6 +1,0 @@
-eclipse.preferences.version=1
-environment/project/ilg.gnuarmeclipse.managedbuild.cross.config.elf.debug.243143052/PATH/delimiter=;
-environment/project/ilg.gnuarmeclipse.managedbuild.cross.config.elf.debug.243143052/PATH/operation=replace
-environment/project/ilg.gnuarmeclipse.managedbuild.cross.config.elf.debug.243143052/PATH/value=C\:\\tools\\ARM\\gcc\\bin;C\:/Program Files (x86)/Java/jre1.8.0_45/bin/client;C\:/Program Files (x86)/Java/jre1.8.0_45/bin;C\:/Program Files (x86)/Java/jre1.8.0_45/lib/i386;C\:\\Windows\\System32;C\:\\ProgramData\\Oracle\\Java\\javapath;C\:\\VXIPNP\\WINNT\\BIN;C\:\\VXIPNP\\WINNT\\TekVISA\\BIN;C\:\\Program Files\\IVI Foundation\\VISA\\Win64\\Bin\\;C\:\\Program Files (x86)\\IVI Foundation\\VISA\\WinNT\\Bin\\;C\:\\Program Files (x86)\\IVI Foundation\\VISA\\WinNT\\TekVISA\\BIN;C\:\\tools\\ARM\\eclipse;C\:\\tools\\ARM\\yagarto-tools\\bin
-environment/project/ilg.gnuarmeclipse.managedbuild.cross.config.elf.debug.243143052/append=true
-environment/project/ilg.gnuarmeclipse.managedbuild.cross.config.elf.debug.243143052/appendContributed=true

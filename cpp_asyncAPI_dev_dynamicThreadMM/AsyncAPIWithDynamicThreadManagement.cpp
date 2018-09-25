@@ -1,7 +1,8 @@
 //! @file AsyncAPIWithDynamicThreadManagement.cpp
 //!
 //!
-//! @brief It is demo to c++ based async API development using dynamic managment of threads.
+//! @brief It is demo to c++ based async API development using dynamic managment of threads
+//!        with smartpointers raw list.
 //!        
 //! 
 //!

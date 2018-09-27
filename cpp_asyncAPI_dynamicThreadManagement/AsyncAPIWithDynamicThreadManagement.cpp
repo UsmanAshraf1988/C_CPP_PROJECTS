@@ -70,9 +70,9 @@ public:
 	}
 
 
-	void joianAllAndReset()
+	void joinAllAndReset()
 	{
-		LOG("joianAllAndReset");
+		LOG("joinAllAndReset");
 		if( mth.get() != nullptr )
 		{
 			if( mth->joinable() )
@@ -96,7 +96,7 @@ public:
 			mNext = mNext->mNext;
 		}
 
-	}// joianAllAndReset
+	}// joinAllAndReset
 
 	void setThreadAndAddReqNode( std::thread * th )
 	{
@@ -172,7 +172,7 @@ public:
 	{
 		std::lock_guard< std::mutex > lck(mmtx);
 		LOG("getValue");
-		mSetValTHL->joianAllAndReset();
+		mSetValTHL->joinAllAndReset();
 		return mVal;
 	}
 

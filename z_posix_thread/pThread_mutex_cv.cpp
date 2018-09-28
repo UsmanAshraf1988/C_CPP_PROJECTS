@@ -90,8 +90,6 @@ int main(int argc, char * argv []) {
 	threadClass tc;
 
 	pthread_create( &p_th1_t, NULL, threadFuncOddSum, &g_num);
-	// Thats not possible due to number of args to pthread_create.
-	//pthread_create( &p_th2_t, NULL, (THREADFUNCPTR)&threadClass::threadClassFuncEvenSum, &tc, &g_num);
 	pthread_create( &p_th2_t, NULL, (THREADFUNCPTR)&threadClass::threadClassFuncEvenSum, &tc);
 
 

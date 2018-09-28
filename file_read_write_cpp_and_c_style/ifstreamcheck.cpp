@@ -74,7 +74,7 @@ int main(int argc, char * argv[] )
 
     if(fileReader.is_open() && fileWriter.is_open())
     {
-      while(fileReader.good() && (fileReader.peek()!=EOF) && (!fileReader.eof()) && fileWriter.good())
+      while( (fileReader.peek()!=EOF) && (!fileReader.eof()) )
       {
         // writing.
         //fileReader >> num1 >> num2 >> str;

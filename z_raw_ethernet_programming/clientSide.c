@@ -60,14 +60,14 @@ int main(int argc, char *argv[])
 		return -1;
 	}
 	
-	/* Get the index of the interface to send on */
+	/* Get the index of the interface */
 	memset(&if_idx, 0, sizeof(struct ifreq));
 	strncpy(if_idx.ifr_name, ifName, IFNAMSIZ-1);
 	if (ioctl(sockfd, SIOCGIFINDEX, &if_idx) < 0)
 	    perror("SIOCGIFINDEX");
 	
 	
-	/* Get the MAC address of the interface to send on */
+	/* Get the MAC address of the interface */
 	memset(&if_mac, 0, sizeof(struct ifreq));
 	strncpy(if_mac.ifr_name, ifName, IFNAMSIZ-1);
 	if (ioctl(sockfd, SIOCGIFHWADDR, &if_mac) < 0)

@@ -56,10 +56,10 @@ int main(int argc, char * argv[] )
     usageErr("\n%s\n", "Need a fileName");
   }
 
-  string fileName(argv[1]);
+  string origFileName(argv[1]);
   info("\nFileName is: %s\n", fileName.c_str());
 
-
+  string fileName = origFileName;
 
 //##########  for c++ style reading and writing.
 

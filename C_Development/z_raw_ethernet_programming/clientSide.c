@@ -33,7 +33,7 @@
 
 int main(int argc, char *argv[])
 {
-	int sockfd, ret, i;
+	int sockfd;
 	int sockopt;
 	ssize_t numbytes;
 	uint8_t buf[BUF_SIZ];
@@ -137,6 +137,6 @@ int main(int argc, char *argv[])
 	
     }
 	close(sockfd);
-	//return ret;
+	
 	return 0;
 }

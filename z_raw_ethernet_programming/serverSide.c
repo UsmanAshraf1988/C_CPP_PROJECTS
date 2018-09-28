@@ -29,11 +29,15 @@
 
 #define RECORD_ARRAY_SIZE 100
 
-typedef enum {false,true} bool;
+typedef enum {false=0, true=1} bool;
 
 //long get_nanos();
 uint64_t GetTimeStamp();
 
+void perror(const char * msg)
+{
+	fprintf(stdout, "%s", msg);
+}
 
 
 int main(int argc, char *argv[])
@@ -50,7 +54,6 @@ int main(int argc, char *argv[])
 	struct iphdr *iph = (struct iphdr *) (sendbuf + sizeof(struct ether_header));
 	struct sockaddr_ll socket_address;
 	char ifName[IFNAMSIZ];
-	struct ifreq ifopts;	/* set promiscuous mode */
 	int sockopt;
 	
 	/* Get interface name */
@@ -64,19 +67,19 @@ int main(int argc, char *argv[])
 	    perror("socket creation");
 	}
 	
-	/* Get the index of the interface to send on */
+	/* Get the index of the interface */
 	memset(&if_idx, 0, sizeof(struct ifreq));
 	strncpy(if_idx.ifr_name, ifName, IFNAMSIZ-1);
 	if (ioctl(sockfd, SIOCGIFINDEX, &if_idx) < 0)
 	    perror("SIOCGIFINDEX");
-	/* Get the MAC address of the interface to send on */
+	/* Get the MAC address of the interface */
 	memset(&if_mac, 0, sizeof(struct ifreq));
 	strncpy(if_mac.ifr_name, ifName, IFNAMSIZ-1);
 	if (ioctl(sockfd, SIOCGIFHWADDR, &if_mac) < 0)
 	    perror("SIOCGIFHWADDR");
 	
 	/* Allow the socket to be reused - incase connection is closed prematurely */
-	if (setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &sockopt, sizeof sockopt) == -1) {
+	if (setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &sockopt, sizeof(sockopt) ) == -1) {
 		perror("setsockopt");
 		close(sockfd);
 		exit(EXIT_FAILURE);

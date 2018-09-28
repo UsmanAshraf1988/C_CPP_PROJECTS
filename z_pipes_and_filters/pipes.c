@@ -1,7 +1,19 @@
 #include <sys/wait.h>
-#include "tlpi_hdr.h"
+#include <stdio.h>
 
 #define BUF_SIZE 10
+
+void errExit(const char * msg)
+{
+    fprintf(stdout, "%s.\n", msg);
+    exit(1);
+}
+
+void usageErr(const char * formatStyle, const char * msg)
+{
+    fprintf(stdout, formatStyle, msg);
+    exit(1);
+}
 
 int
 main(int argc, char *argv[])
@@ -37,7 +49,7 @@ main(int argc, char *argv[])
         write(STDOUT_FILENO, "\n", 1);
         if (close(pfd[0]) == -1)
             errExit("close");
-        _exit(EXIT_SUCCESS);
+        exit(EXIT_SUCCESS);
 
     default:            /* Parent - writes to pipe */
         if (close(pfd[0]) == -1)            /* Read end is unused */

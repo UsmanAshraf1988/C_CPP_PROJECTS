@@ -1,3 +1,19 @@
+//! @file main.c
+//!
+//!
+//! @brief TI Launchpad Port-F led drivers are implemented from scratch.
+//!
+//!
+//! @Author Usman Ashraf
+//! @email  u.ashraf1988@gmail.com
+//!
+//! GNU Lesser General Public License v3.0, free to use, re-use, distriution and modification
+//! provided this above header information. Author take no responsibility for any outcome of
+//! this code.
+//!
+//! If you need more information, please, contact me at my above email address.
+//!
+
 
 #include "tm4c123gh6pm.h"
 

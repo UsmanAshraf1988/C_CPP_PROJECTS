@@ -78,7 +78,7 @@ int main(int argc, char * argv[] )
     {
       while( (fileReader.peek()!=EOF) && (!fileReader.eof()) )
       {
-        // writing.
+        // reading.
         //fileReader >> num1 >> num2 >> str;
         string str1;
         getline(fileReader, str1,'\n');

@@ -95,9 +95,9 @@ int main(int argc, char * argv[] )
   }
   catch (exception & ex)
   {
-    usageErr("\nException: %s\n", ex.what());
     fileReader.close();
     fileWriter.close();
+    usageErr("\nException: %s\n", ex.what());
   }
 
   fileReader.close();
@@ -109,16 +109,16 @@ int main(int argc, char * argv[] )
 
 
   FILE *fileStreamRead;
-  FILE *fileStreamOut;
+  FILE *fileStreamWrite;
   char buffer[MAX_BUF]={0};
 
   fileStreamRead  = fopen(fileName.c_str(), "r");
 
   fileName = "data3.txt";
-  fileStreamOut = fopen(fileName.c_str(), "w");
+  fileStreamWrite = fopen(fileName.c_str(), "w");
 
   
-  if(fileStreamRead!=NULL && fileStreamOut!=NULL)
+  if(fileStreamRead!=NULL && fileStreamWrite!=NULL)
   {
     // reading and checks.
     while( (!feof(fileStreamRead)) && (fgets(buffer, MAX_BUF, fileStreamRead)!=NULL)    )
@@ -126,15 +126,17 @@ int main(int argc, char * argv[] )
       info("\n%s\n", buffer);
 
       // writing and checks.
-      if(fputs(buffer, fileStreamOut)<0)
+      if(fputs(buffer, fileStreamWrite)<0)
       {
+        fclose(fileStreamRead);
+        fclose(fileStreamWrite);
         usageErr("\nError: %s\n","C File writing error.");
       }
     }
   }
 
   fclose(fileStreamRead);
-  fclose(fileStreamOut);
+  fclose(fileStreamWrite);
 
 
 

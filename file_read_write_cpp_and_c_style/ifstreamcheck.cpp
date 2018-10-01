@@ -1,4 +1,4 @@
-//! @file shm_header.c
+//! @file ifstreamcheck.cpp
 //!
 //!
 //! @brief C and C++ file reading and writing styles.
@@ -22,6 +22,8 @@
 //!
 //!
 //! Compiled with GCC Version > 4.5
+
+
 #include<iostream>
 #include<fstream>
 #include <sstream>

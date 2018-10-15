@@ -44,28 +44,28 @@
 #endif
 
 
-class THL
+class ThreadHandler
 {
 public:
 
-	THL()
+	ThreadHandler()
 	{
 		local_counter = global_counter;
 		global_counter++;
 		mth.reset();
 		mNext.reset();
-		LOG("THL CONSTRUCTOR WITH COUNTER NUMBER: SEE NUMBER BELOW");
+		LOG("ThreadHandler CONSTRUCTOR WITH COUNTER NUMBER: SEE NUMBER BELOW");
 		LOG(local_counter);
 	}
 
-	THL(const THL & thl) = delete;
+	ThreadHandler(const ThreadHandler & thl) = delete;
 
-	THL(THL&& thl)= delete;
+	ThreadHandler(ThreadHandler&& thl)= delete;
 
 
-	virtual ~THL()
+	virtual ~ThreadHandler()
 	{
-		LOG("~THL DESTRUCTOR WITH COUNTER NUMBER: SEE NUMBER BELOW");
+		LOG("~ThreadHandler DESTRUCTOR WITH COUNTER NUMBER: SEE NUMBER BELOW");
 		LOG(local_counter);
 	}
 
@@ -109,18 +109,18 @@ public:
 		{
 			if( mNext.get() == nullptr)
 			{
-				mNext = std::make_shared< THL > ();
+				mNext = std::make_shared< ThreadHandler > ();
 				mNext->mth.reset( std::move(th) );
 				return;
 			}
-			std::shared_ptr< THL > tmpTHL = mNext;
-			std::shared_ptr< THL > tmpTHL_valid;
+			std::shared_ptr< ThreadHandler > tmpTHL = mNext;
+			std::shared_ptr< ThreadHandler > tmpTHL_valid;
 			while( tmpTHL.get() != nullptr )
 			{
 				tmpTHL_valid = tmpTHL;
 				tmpTHL = tmpTHL->mNext;
 			}
-			tmpTHL = std::make_shared< THL > (); 
+			tmpTHL = std::make_shared< ThreadHandler > (); 
 			tmpTHL->mth.reset( std::move(th) );
 			tmpTHL_valid->mNext = tmpTHL;
 		}
@@ -128,12 +128,12 @@ public:
 
 private:
 	std::unique_ptr< std::thread > mth;
-	std::shared_ptr< THL > mNext;
+	std::shared_ptr< ThreadHandler > mNext;
 	static int global_counter;
 	int local_counter;
 };
 
-int THL::global_counter=0;
+int ThreadHandler::global_counter=0;
 
 
 class Service
@@ -143,7 +143,7 @@ public:
 	{
 		LOG("Service Constructor");
 		mVal=0;
-		mSetValTHL.reset( std::move(new THL) );
+		mSetValTHL.reset( std::move(new ThreadHandler) );
 	}
 
 	Service(const Service& service) = delete;
@@ -178,7 +178,7 @@ public:
 
 private:
 	int mVal;
-	std::unique_ptr < THL > mSetValTHL;
+	std::unique_ptr < ThreadHandler > mSetValTHL;
 	std::mutex mmtx;
 };
 

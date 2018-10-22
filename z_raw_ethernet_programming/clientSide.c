@@ -18,13 +18,6 @@
 #define DEST_MAC4	0x71
 #define DEST_MAC5	0xfa
 
-#define MY_MAC0		0x00
-#define MY_MAC1		0x00
-#define MY_MAC2		0xc9
-#define MY_MAC3		0xd2
-#define MY_MAC4		0x71
-#define MY_MAC5		0xfe
-
 #define ETHER_TYPE	0x0800
 
 #define DEFAULT_IF	"ens3f1"

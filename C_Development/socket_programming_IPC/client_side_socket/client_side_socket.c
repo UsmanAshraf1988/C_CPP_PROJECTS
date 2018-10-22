@@ -56,7 +56,7 @@ static void error(const char * msg){
 int main(int argc, char * argv [] )
 {
     // socket client side.
-    static int msg_counter=0;
+    int msg_counter=0;
     int sock_fd;
     struct sockaddr_un sockAddr_unCli;
     char buff[BUFFER_CAPACITY] = {0}; 

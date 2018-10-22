@@ -131,7 +131,7 @@ int main(int argc, char *argv[])
 	socket_address.sll_addr[5] = DEST_MAC5;
 	
 	
-	void* buffer1 = (void*)malloc(BUF_SIZ); /*Buffer for ethernet frame*/
+	void* buffer1 = malloc(BUF_SIZ); /*Buffer for ethernet frame*/
 	int lengthBytes = 0; /*length of the received frame*/ 
 	
 	int outter_i =0;

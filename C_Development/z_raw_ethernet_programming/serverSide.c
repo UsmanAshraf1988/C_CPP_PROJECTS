@@ -14,12 +14,12 @@
 #include <stdint.h>
 #include <unistd.h>
 
-#define MY_DEST_MAC0	0x00
-#define MY_DEST_MAC1	0x00
-#define MY_DEST_MAC2	0xc9
-#define MY_DEST_MAC3	0xd2
-#define MY_DEST_MAC4	0x71
-#define MY_DEST_MAC5	0xfe
+#define DEST_MAC0	0x00
+#define DEST_MAC1	0x00
+#define DEST_MAC2	0xc9
+#define DEST_MAC3	0xd2
+#define DEST_MAC4	0x71
+#define DEST_MAC5	0xfe
 
 //#define DEFAULT_IF	"enp1s0"
 #define DEFAULT_IF	"ens3f0"
@@ -102,12 +102,12 @@ int main(int argc, char *argv[])
 	eh->ether_shost[4] = ((uint8_t *)&if_mac.ifr_hwaddr.sa_data)[4];
 	eh->ether_shost[5] = ((uint8_t *)&if_mac.ifr_hwaddr.sa_data)[5];
         
-	eh->ether_dhost[0] = MY_DEST_MAC0;
-	eh->ether_dhost[1] = MY_DEST_MAC1;
-	eh->ether_dhost[2] = MY_DEST_MAC2;
-	eh->ether_dhost[3] = MY_DEST_MAC3;
-	eh->ether_dhost[4] = MY_DEST_MAC4;
-	eh->ether_dhost[5] = MY_DEST_MAC5;
+	eh->ether_dhost[0] = DEST_MAC0;
+	eh->ether_dhost[1] = DEST_MAC1;
+	eh->ether_dhost[2] = DEST_MAC2;
+	eh->ether_dhost[3] = DEST_MAC3;
+	eh->ether_dhost[4] = DEST_MAC4;
+	eh->ether_dhost[5] = DEST_MAC5;
 	/* Ethertype field */
 	eh->ether_type = htons(ETHER_TYPE);
 	tx_len += sizeof(struct ether_header);
@@ -123,15 +123,15 @@ int main(int argc, char *argv[])
 	/* Address length*/
 	socket_address.sll_halen = ETH_ALEN;
 	/* Destination MAC */
-	socket_address.sll_addr[0] = MY_DEST_MAC0;
-	socket_address.sll_addr[1] = MY_DEST_MAC1;
-	socket_address.sll_addr[2] = MY_DEST_MAC2;
-	socket_address.sll_addr[3] = MY_DEST_MAC3;
-	socket_address.sll_addr[4] = MY_DEST_MAC4;
-	socket_address.sll_addr[5] = MY_DEST_MAC5;
+	socket_address.sll_addr[0] = DEST_MAC0;
+	socket_address.sll_addr[1] = DEST_MAC1;
+	socket_address.sll_addr[2] = DEST_MAC2;
+	socket_address.sll_addr[3] = DEST_MAC3;
+	socket_address.sll_addr[4] = DEST_MAC4;
+	socket_address.sll_addr[5] = DEST_MAC5;
 	
 	
-	void* buffer1 = (void*)malloc(BUF_SIZ); /*Buffer for ethernet frame*/
+	void* buffer1 = malloc(BUF_SIZ); /*Buffer for ethernet frame*/
 	int lengthBytes = 0; /*length of the received frame*/ 
 	
 	int outter_i =0;
@@ -192,6 +192,7 @@ int main(int argc, char *argv[])
 	}// for outter_i
 	
       
+        delete buffer1;
 	
 	return 0;
 }

@@ -24,7 +24,7 @@
 //!
 //! Compiled with GCC Version > 4.8
 //! flags: -std=c++11 -lpthread
-//! Shell Command: g++ -std=c++11 -lpthread mutableMem.cpp
+//! Shell Command: g++ -std=c++11 -lpthread ThreadSafeMutableType.cpp
 
 #include <iostream> 
 #include <thread> 

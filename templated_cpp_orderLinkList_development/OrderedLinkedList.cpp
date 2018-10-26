@@ -30,11 +30,12 @@
 #include<memory>
 
 
+namespace TASK{
+
 template <class T>
 bool lessThan(T a, T b){
 	return a<b;
 }
-
 
 
 
@@ -50,7 +51,7 @@ public:
 
 private:
 	T mData;
-	std::shared_ptr< Node<T> > mNext;
+	Node* mNext;
 };
 
 
@@ -74,7 +75,7 @@ class OrderedLinkedList{
 
 public:
 	
-	explicit OrderedLinkedList( bool (*orderFn)(T,T) ): mOrderFn(orderFn) {
+	explicit OrderedLinkedList( bool (*orderFn)(T,T) = lessThan  ): mOrderFn(orderFn) {
 
 		mNodeStart = nullptr;
 		mSize=0;
@@ -86,7 +87,7 @@ public:
 	void insert(T data) {
 
 		if (mSize==0) {
-			mNodeStart = std::make_shared<Node<>>
+			mNodeStart = new Node<T>();
 			mNodeStart->mData = data;
 			mNodeStart->mNext = nullptr;
 			mSize++;
@@ -105,10 +106,10 @@ public:
 			}
 
 			if(tmpFlagCheck && tmpNodePtrValid!=nullptr){
+				Node<T>* tmpPtr = tmpNodePtrValid->mNext;
 				tmpNodePtrValid->mNext = new Node<T>();
 				tmpNodePtrValid->mNext->mData = data;
-				//tmpNodePtrValid->mNext->mNext = nullptr;
-				tmpNodePtrValid->mNext->mNext = tmpNodePtr;
+				tmpNodePtrValid->mNext->mNext = tmpPtr;
 				mSize++;
 			} else {
 				mNodeStart = new Node<T>();
@@ -138,7 +139,7 @@ public:
 	}
 
 
-	std::size_t getSize() const {
+	std::size_t getSize() const{
 		return mSize;
 	}
 
@@ -167,29 +168,52 @@ public:
 		Node<T>* tmpNodePtr = mNodeStart;
 		Node<T>* tmpNodePtrValid = mNodeStart;
 		bool flag = false;
-		while(tmpNodePtr!=nullptr && !(flag=(*itr==tmpNodePtr->mData)) ){
+
+		while(tmpNodePtr!=nullptr && !( flag=(*itr==tmpNodePtr->mData) )  ){
 				tmpNodePtrValid = tmpNodePtr ;
 				tmpNodePtr = tmpNodePtr->mNext;
 		}
-		//check for not first node
-		if(tmpNodePtrValid!=tmpNodePtr && tmpNodePtr!=nullptr &&flag){
-			tmpNodePtrValid->mNext = tmpNodePtr->mNext;
+		if( tmpNodePtr!=tmpNodePtrValid && tmpNodePtr!=nullptr && flag ){ // if not first node check
+			// if not last node check
+			if(tmpNodePtr->mNext){
+				tmpNodePtrValid->mNext = tmpNodePtr->mNext;
+			} else { //if last node check
+				tmpNodePtrValid->mNext = nullptr;
+			}
 			delete tmpNodePtr;
 			mSize--;
-		} else if (tmpNodePtrValid==tmpNodePtr && tmpNodePtr!=nullptr &&flag){//Check for 1st node.
+		} else if (  tmpNodePtr==tmpNodePtrValid && flag ) { //first node check
 			mNodeStart = mNodeStart->mNext;
 			delete tmpNodePtr;
 			mSize--;
+		} else {
+			std::cerr<< *itr << "not exist in OrderedLinkList.\n";
 		}
+
+	}
+
+	virtual ~OrderedLinkedList(){
+		Node<T>* tmpNodePtr;
+
+		while(mNodeStart!=nullptr){
+			tmpNodePtr= mNodeStart;
+			mNodeStart = mNodeStart->mNext;
+			delete tmpNodePtr;
+		}
+
+		delete mStrtItr;
+		delete mEndItr;
 	}
 
 
 private:
 	std::size_t mSize;
-	std::shared_ptr< Node<T> > mNodeStart;
+	Node<T>* mNodeStart;
 	bool (*mOrderFn)(T,T);
-	std::shared< Iterator<T> > mStrtItr;
-	std::shared< Iterator<T> > mEndItr;
+	Iterator<T>* mStrtItr;
+	Iterator<T>* mEndItr;
+
+
 };
 
 
@@ -204,7 +228,7 @@ template<class T>
 class Iterator{
 
 public:
-	Iterator(Node<T>* pNode):mpNode(pNode){}
+	Iterator(Node<T>* pNode):mpNode(pNode){ }
 
 	Iterator& operator = (const Iterator& digIter){
 		this->mpNode = digIter.mpNode;
@@ -224,7 +248,7 @@ public:
 	}
 
 	Iterator& operator++(){
-		if((mpNode)!=nullptr){
+		if(mpNode!=nullptr){
 			mpNode = mpNode->mNext;
 		}
 		return *this;
@@ -236,7 +260,7 @@ public:
 		return *pTempItr;
 	}
 
-	T operator*(){
+	T operator*() const {
 		if(mpNode!=nullptr){
 			return mpNode->mData;
 		} else {
@@ -249,7 +273,12 @@ private:
 	Node<T>* mpNode;
 };
 
+} //namespae TASK
 
+
+
+
+using namespace TASK;
 
 int main(int argc, char* argv[]){
 
@@ -332,3 +361,4 @@ int main(int argc, char* argv[]){
 
 	return 0;
 }//main
+

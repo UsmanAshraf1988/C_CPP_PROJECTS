@@ -43,7 +43,7 @@
 	#define LOG(msg) if(msg==msg) printf("\r");
 #endif
 
-
+template <typename T>
 class ThreadHandler
 {
 public:
@@ -58,9 +58,9 @@ public:
 		LOG(local_counter);
 	}
 
-	ThreadHandler(const ThreadHandler & thl) = delete;
+	ThreadHandler(const ThreadHandler<T> & thl) = delete;
 
-	ThreadHandler(ThreadHandler&& thl)= delete;
+	ThreadHandler(ThreadHandler<T>&& thl)= delete;
 
 
 	virtual ~ThreadHandler()
@@ -109,18 +109,18 @@ public:
 		{
 			if( mNext.get() == nullptr)
 			{
-				mNext = std::make_shared< ThreadHandler > ();
+				mNext = std::make_shared< ThreadHandler<T> > ();
 				mNext->mth.reset( std::move(th) );
 				return;
 			}
-			std::shared_ptr< ThreadHandler > tmpTHL = mNext;
-			std::shared_ptr< ThreadHandler > tmpTHL_valid;
+			std::shared_ptr< ThreadHandler<T> > tmpTHL = mNext;
+			std::shared_ptr< ThreadHandler<T> > tmpTHL_valid;
 			while( tmpTHL.get() != nullptr )
 			{
 				tmpTHL_valid = tmpTHL;
 				tmpTHL = tmpTHL->mNext;
 			}
-			tmpTHL = std::make_shared< ThreadHandler > (); 
+			tmpTHL = std::make_shared< ThreadHandler<T> > (); 
 			tmpTHL->mth.reset( std::move(th) );
 			tmpTHL_valid->mNext = tmpTHL;
 		}
@@ -128,47 +128,48 @@ public:
 
 private:
 	std::unique_ptr< std::thread > mth;
-	std::shared_ptr< ThreadHandler > mNext;
+	std::shared_ptr< ThreadHandler<T> > mNext;
 	static int global_counter;
 	int local_counter;
 };
+template <typename T>
+int ThreadHandler<T>::global_counter=0;
 
-int ThreadHandler::global_counter=0;
 
-
+template <typename T>
 class Service
 {
 public:
 	Service()
 	{
 		LOG("Service Constructor");
-		mVal=0;
-		mSetValTHL.reset( std::move(new ThreadHandler) );
+		mVal=(T)0;
+		mSetValTHL.reset( std::move(new ThreadHandler<T>()) );
 	}
 
-	Service(const Service& service) = delete;
+	Service(const Service<T>& service) = delete;
 
-	Service(Service && service) = delete;
+	Service(Service<T> && service) = delete;
 
 	virtual ~Service()
 	{
 		LOG("Service Destructor");
 	}
 	
-	void asyncSetValue(int val)
+	void asyncSetValue(T val)
 	{
 		LOG("asyncSetValue");
-		mSetValTHL->setThreadAndAddReqNode( new std::thread(&Service::setValue, this, val) );
+		mSetValTHL->setThreadAndAddReqNode( new std::thread(&Service<T>::setValue, this, val) );
 	}
 
-	void setValue(int val)
+	void setValue(T val)
 	{
 		std::lock_guard< std::mutex > lck(mmtx);
 		LOG("setValue");
 		mVal=val;
 	}
 
-	int getValue()
+	T getValue()
 	{
 		std::lock_guard< std::mutex > lck(mmtx);
 		LOG("getValue");
@@ -177,8 +178,8 @@ public:
 	}
 
 private:
-	int mVal;
-	std::unique_ptr < ThreadHandler > mSetValTHL;
+	T mVal;
+	std::unique_ptr < ThreadHandler<T> > mSetValTHL;
 	std::mutex mmtx;
 };
 
@@ -192,7 +193,7 @@ int main()
 	LOG("Main 1");
 	std::cout<<"Hello World2\n";
 
-	Service ser;
+	Service<int> ser;
 	ser.asyncSetValue(1);
 	ser.asyncSetValue(9);
 	ser.asyncSetValue(19);

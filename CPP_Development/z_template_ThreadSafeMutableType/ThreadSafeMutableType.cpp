@@ -33,7 +33,7 @@
 #define CHECKER_VAL 999
 
 #ifndef NO_DEBUG_MSG
-	#define LOG(msg) std::cout<<"msg: Thead id:"<<std::this_thread::get_id()<<": " <<msg<<std::endl;
+	#define LOG(msg) std::cout<<"msg: Thread id:"<<std::this_thread::get_id()<<": " <<msg<<std::endl;
 #else
 	#define LOG(msg) if(msg==msg) printf("\r");
 #endif

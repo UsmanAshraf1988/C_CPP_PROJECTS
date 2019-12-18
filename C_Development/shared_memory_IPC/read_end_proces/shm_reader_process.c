@@ -27,8 +27,9 @@
 //! For debug messages, Please define this macro here.
 //! Or, at compile time with macro flags
 //! #define PROTOTYPE 1 or -DPROTOTYPE=1
+
 #ifdef PROTOTYPE
-#define PUT_LOG(msg) if(PROTOTYPE)std::cout<<msg;
+#define PUT_LOG(msg) if(PROTOTYPE)fprintf(stdout,"%s",msg);
 #else
 #define PUT_LOG(msg)
 #endif
@@ -51,7 +52,7 @@ int main(int argc, char * argv []){
   int fd_shm = shm_open(shm_name, O_RDWR, 0666);
   if (fd_shm<0){
     shm_unlink(shm_name);
-    fprintf(stderr, "shm_open:unsuccessful...\n", shm_name);
+    fprintf(stderr, "shm_open:unsuccessful: \'%s\' ...\n", shm_name);
     exit(1);
   }
 
@@ -68,20 +69,16 @@ int main(int argc, char * argv []){
 
   
   while(1){
-
+    printf("Reader process is waiting for \'Writer process\'\n");
     sem_wait( &(shm_mem->rdSem) );
 
-    printf("From Reader: %d characters are written, and string is %s.\n", shm_mem->cnt, shm_mem->buf);
+    printf("From Reader: %d characters are written, and string is: \'%s\'\n", shm_mem->cnt, shm_mem->buf);
     if( shm_mem->cnt <= 1 ){
       break;
     }
 
     sem_post( &(shm_mem->wrSem) );
   }
-
-#ifndef TRIAL
-  sem_post( &(shm_mem->wrSem) );
-#endif
 
   //Do cleanup
   munmap( shm_mem, sizeof(struct Shm_Mem) );

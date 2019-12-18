@@ -1,11 +1,11 @@
-//! @file shm_header.c
+//! @file shm_header.h
 //!
 //!
 //! @brief It is memory struct layout for shared memory IPC.
 //! 
 //!
-//! @ Author: Usman Ashraf 
-//! @ email:  u.ashraf1988@gmail.com
+//! @author Usman Ashraf 
+//! @email  u.ashraf1988@gmail.com/usman.ashrafpak@gmail.com
 //!
 //! GNU Lesser General Public License v3.0, free to use, re-use, distriution and modification
 //! provided this above header information. Author take no responsibility for any outcome of

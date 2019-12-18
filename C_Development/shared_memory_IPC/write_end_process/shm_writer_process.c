@@ -51,7 +51,7 @@ int main(int argc, char * argv []){
   int fd_shm = shm_open(shm_name, O_CREAT|O_EXCL|O_RDWR, 0666);
   if (fd_shm<0){
     shm_unlink(shm_name);
-    fprintf(stderr, "shm_open:unsuccessful...\n", shm_name);
+    fprintf(stderr, "shm_open:unsuccessful: \'%s\' ...\n", shm_name);
     exit(1);
   }
 
@@ -85,9 +85,10 @@ int main(int argc, char * argv []){
     shm_mem->cnt = 0;
     memset( (void *)( &(shm_mem->buf)), '\0',  BUF_SIZE);
 
+    printf("Writer process, please write something or press enter to finish.\n");
     shm_mem->cnt = read(STDIN_FILENO, shm_mem->buf, BUF_SIZE);
 
-    printf("From Writer: %d characters are written, and string is %s.\n", shm_mem->cnt, shm_mem->buf);
+    printf("From Writer: %d characters are written, and string is: \'%s\'\n", shm_mem->cnt, shm_mem->buf);
 
     sem_post( &(shm_mem->rdSem) );
 
@@ -95,10 +96,6 @@ int main(int argc, char * argv []){
       break;
     }
   }
-
-#ifndef TRIAL
-  sem_wait( &(shm_mem->wrSem) );
-#endif
 
   //Do cleanup
   munmap( shm_mem, sizeof(struct Shm_Mem) );

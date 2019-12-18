@@ -29,7 +29,7 @@
 
 #define BUF_SIZE 1024
 
-const char shm_name[] = "/myShmMem";
+const char shm_name[] = "/shm_mem";
 
 struct Shm_Mem {
   sem_t wrSem;
@@ -37,4 +37,3 @@ struct Shm_Mem {
   int cnt;
   char buf[BUF_SIZE];
 };
-

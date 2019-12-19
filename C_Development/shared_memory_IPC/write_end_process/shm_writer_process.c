@@ -12,7 +12,7 @@
 //! this code. 
 //!
 //! If you need more information, please, contact me at my above email address.
-//
+//!
 //! Successfully executed under OS:
 //!                                RedHat 7
 //!                                RedHat 5
@@ -20,12 +20,14 @@
 //!                                Ubuntu 16
 //!                                yocto-created minimal image
 //!
-//!
-//! Compiled with GCC Version > 4.5
-
 //! For debug messages, Please define this macro here.
 //! Or, at compile time with macro flags
 //! #define PROTOTYPE 1 or -DPROTOTYPE=1 compilaiton flag.
+//!
+//! Compiled with GCC Version > 4.5
+//! gcc -DPROTOTYPE=1 shm_writer_process.c -o shm_writer_process -lrt -lpthread
+
+
 
 #ifdef PROTOTYPE
 #define PUT_LOG(msg) if(PROTOTYPE)fprintf(stdout,"%s",msg);

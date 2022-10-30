@@ -5,8 +5,6 @@
 
 #include <iostream>
 #include <string>
-#include <stdlib.h>
-#include <string.h>
 #include <stdint.h>
 
 using namespace std;
@@ -112,6 +110,7 @@ void CircularBuffer_FIFO<T>::push(T* dataBuf, uint32_t numberOfTimes)
         }
         else
         {
+            // break is also an option here if required!
             cout << "Buffer is FULL, in loop ..." << endl;
         }
     }
@@ -151,6 +150,7 @@ void CircularBuffer_FIFO<T>::pop(T* dataBuf, uint32_t numberOfTimes)
         }
         else
         {
+            // break is also an option here if required!
             cout << "Buffer is EMPTY, in loop ..." << endl;
         }
     }
